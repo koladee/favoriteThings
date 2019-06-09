@@ -87,7 +87,7 @@ You can now start interacting with the web app
 `For live testing, visit`
 <https://spibes.com/>
 
-#### API ENDPOINTS ON LOCALHOST
+#### API ENDPOINTS ONLINE
 `User: ` <https://spibes.com/api/user> You can `GET` , `POST` and `PUT` 
 
 `Category: ` <https://spibes.com/api/cat> You can `GET` , `POST` and `PUT` 

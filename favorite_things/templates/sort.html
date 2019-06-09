@@ -1,0 +1,66 @@
+{% for l in list %}
+
+    <div class="row card" style="width: 100%; min-height: 250px; padding: 20px; margin-left: 0px;">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>TITLE</label>
+                <input id="{{ l['rid']}}{{l['id']}}{{"title"}}" class="form-control" type="text" readonly value="{{ l['title'] }}">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+            <label>DATE CREATED</label>
+                <input class="form-control" type="date" readonly value="{{ l['created_date'].split('T')[0] }}">
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="form-group">
+                <label>DESCRIPTION</label>
+                <textarea id="{{ l['rid']}}{{l['id']}}{{"description"}}" class="form-control" style="resize: none" rows="10" readonly >{{ l['description'] }}</textarea>
+            </div>
+        </div>
+        <div class="col-md-4">
+           <div class="form-group">
+                <label>CATEGORY</label>
+               <select id="{{ l['rid']}}{{l['id']}}{{"category"}}" class="form-control" disabled >
+                   <option {% if l['cat'] == 1 %}
+                           selected
+                           {% endif %}
+                           value="1">Person</option>
+               <option {% if l['cat'] == 2 %}
+                           selected
+                           {% endif %}
+                           value="2">Food</option>
+               <option {% if l['cat'] == 3 %}
+                           selected
+                           {% endif %}
+                           value="3">Place</option>
+                   {% for k in cats %}
+                       <option{% if l['cat'] == k.id %}
+                           selected
+                           {% endif %}
+                               value="{{ k.id }}">{{ k.name }}</option>
+                   {% endfor %}
+               </select>
+           </div>
+            <div class="form-group">
+                <label>RANKING</label>
+                <input id="{{ l['rid']}}{{l['id']}}{{"ranking"}}" type="number" class="form-control" readonly value="{{ l['ranking'] }}">
+            </div>
+            <div class="form-group">
+                <div class="alert alert-info">
+                    Last Modified:
+                    <span id="{{ l['rid']}}{{l['id']}}{{"last-mod"}}">
+                        {% if l['modified_date'] is not none %}
+                            {{ l['modified_date'].split('T')[0] }}
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+            <div class="form-group">
+                <span id="{{ l['rid']}}{{l['id']}}{{"edit-bt"}}" onclick="edit_list('{{ l['rid']}}', '{{ l['id']}}')" class="btn btn-default" style="font-weight: bolder;"><i class="glyphicon glyphicon-pencil"></i> EDIT</span>
+                <span id="{{ l['rid']}}{{l['id']}}{{"log-bt"}}" onclick="log_list('{{ l['rid']}}', '{{ l['id'] }} ')" class="btn btn-primary" style="font-weight: bolder; float: right;"><i class="glyphicon glyphicon-time"></i> LOGS</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}

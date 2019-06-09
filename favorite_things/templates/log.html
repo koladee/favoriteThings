@@ -1,0 +1,7 @@
+{% if lnt > 0 %}
+    {% for log in list %}
+        <span style="font-size: 80%;">{{ ">>> "+log | safe }}</span><br><br>
+    {% endfor %}
+{% else %}
+    <span style="font-size: 80%;">{{ ">>> No changes has been made for this item." }}</span><br><br>
+{% endif %}

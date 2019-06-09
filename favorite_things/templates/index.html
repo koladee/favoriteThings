@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Favorite Tracker</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/notifications/Lobibox.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/notifications/notifications.css') }}" >
+    <script src="{{ url_for('static', filename='js/jquery-1.11.2.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notifications/Lobibox.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/notifications/notification-active.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/js.js') }}"></script>
+</head>
+<body style="background: #122b40;">
+ <nav class="navbar navbar-inverse" style="background: rgba(0,0,0,0); color: #eee; font-weight: bolder;
+  font-size: 120%;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">FavoriteTracker</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li id="home-bt" class="active navz" onclick="nav('home')"><a href="#">Home</a></li>
+        <li id="list-bt" class="navz hidden" onclick="nav('list')"><a href="#"><i class="glyphicon glyphicon-list-alt"></i> Favorite List</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li id="active" class="hidden"><a href="#"><span class="glyphicon glyphicon-user"></span> <span id="active-name"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="content">
+   {{ comp | safe}}
+</div>
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="margin-top: 15%; background: #0f0f0f; color: #eee;">
+
+        <div id="put-stuffs" class="modal-body" style="padding-bottom: 0px; margin-bottom: 0px;
+        height: 450px; overflow-y: auto">
+
+      </div>
+      <div class="modal-footer"  style="border-top: 0px solid #eee; margin: 0px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="modal1" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content" style="margin-top: 15%;">
+
+        <div id="put-stuffs" class="modal-body" style="padding-bottom: 0px; margin-bottom: 0px; min-height: 400px;">
+
+      </div>
+      <div class="modal-footer"  style="border-top: 0px solid #eee; margin: 0px;">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

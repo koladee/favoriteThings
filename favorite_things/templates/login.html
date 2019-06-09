@@ -1,0 +1,23 @@
+{% from "includes/_formhelpers.html" import render_field %}
+<div class="row" style="margin: 0px; padding: 0px;">
+    <div class="col-md-4"></div>
+    <div class="col-md-4" style="padding-top: 7%;">
+        <div class="card" style="padding: 20px; background: #fff; color: #122b40;">
+            <center><h1 style="font-weight: bolder;">LOGIN</h1></center>
+                <div class="form-group">
+                {{ render_field(form.email, class_="form-control", id="login-user") }}
+                </div>
+                <div class="form-group">
+                {{ render_field(form.password, class_="form-control", id="login-pass") }}
+                </div>
+            <div class="form-group">
+                <center><span id="login-bt" onclick="login()" class="btn btn-default" style="font-weight: bolder;
+                 padding: 10px; font-size: 120%;">LOGIN</span><br>
+                    <span style="cursor: pointer;">Don't have an account? <a href="#" onclick="reg_form()">Sign Up
+                    </a></span>
+                </center>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4"></div>
+</div>

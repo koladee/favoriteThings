@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
-from favorite_things import db, bcrypt
-from favorite_things.models import User, UserSchema, Category, CategorySchema, List, ListSchema
+from api import db, bcrypt
+from api.models import User, UserSchema, Category, CategorySchema, List, ListSchema
 import string
 import random
 from sqlalchemy import func

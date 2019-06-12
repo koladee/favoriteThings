@@ -1,4 +1,4 @@
-from favorite_things import db, login_manager
+from api import db, login_manager
 from marshmallow import Schema, fields, pre_load, validate
 from flask_marshmallow import Marshmallow
 from flask_login import UserMixin

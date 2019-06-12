@@ -1,6 +1,6 @@
 from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
-from favorite_things import db, app
+from api import db, app
 
 
 migrate = Migrate(app, db)

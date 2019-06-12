@@ -21,3 +21,6 @@ api_bp = Blueprint('api', __name__)
 api = Api(api_bp)
 app.register_blueprint(api_bp, url_prefix='/api')
 from api import route
+
+if __name__ == '__main__':
+  app.run(debug=True)

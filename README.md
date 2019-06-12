@@ -6,11 +6,11 @@ A "Favorite Things Tracker" is a system that allows the user to track or take no
 
 
 ## Approach to Problem Statement
-* There different database tables where used to implement this, the User, the Category and the List tables.
+* Three different database tables were used to implement this, the User, the Category and the List tables.
 
-* The User table was used to manage users' details such as id, username, email address, and password (password was added because any user's favorite thing has to be confidential and protected). 
+* The User table is used to manage users' details such as id, username, email address, and password (password was added because any user's favorite thing has to be confidential and protected). 
 
-* The Category table was used manage the default categories (Places, People  and Food) and also to manage the categories that will be created by other users (kindly note that any new category created by a user is visible to only that user and only this user can make use of it). The columns present in the Category table include (id, name, user_id). 
+* The Category table is used manage the default categories (Places, People  and Food) and also to manage the categories that will be created by other users (kindly note that any new category created by a user is visible to only that user and only this user can make use of it). The columns present in the Category table include (id, name, user_id). 
 
 * The List table helps to manage the list of favorite things by all users, it has the following columns (id, rid, title, description, ranking, user_id, cat, created_date, modified_date and log).
 
@@ -24,17 +24,17 @@ When a new favorite things is to be added by a particular user, the following co
 
 * The user can select from the following list of categories People, Place, Food and all  other categories created by this user.
 
-* When a ranking value is submitted, the system check through the List table for the favorite things added by this particular user with the same category selected, if any of the favorite things checked for has the same ranking value with the newly submitted favorite thing, the ranking number of the existing favorite thing changes to the sum of the highest ranking in that category for the user and one, thus the newly submitted favorite thing maintains its own ranking value.
+* When a ranking value is submitted, the system checks through the List table for the favorite things added by this particular user with the same category submitted, if any of the favorite things checked for has the same ranking value with the newly submitted favorite thing, the ranking number of the existing favorite thing changes to the sum of the highest ranking in that category for the particular user and one. Thus, the newly submitted favorite thing maintains its own ranking value.
 
 
 ##Features of the solution
-*  A REST API built with flask-restful with three endpoints (listed in the API endpoint section) which can handle GET, POST and PUT requests.
+*  A REST API built with flask-restful with three major endpoints (listed in the API endpoint section) which can handle GET, POST and PUT requests.
 * User login implemented with flask-login
 * SQLAlchemy ORM used for querying the database
+* Password encryption using Bcrypt
 * MySQL database
 * Bootstrap framework used for the UI
 * Jquery Javascript framework used
-* 
 
 ## How to get Started
 
@@ -51,7 +51,7 @@ $ pip install -r requirements.txt
 
 Initialize Virtual Environment
 ```
-$ venv/bin/activate
+$ source venv/bin/activate
 ```
 * Step 3
 
@@ -86,6 +86,30 @@ You can now start interacting with the web app
 
 `For live testing, visit`
 <https://spibes.com/>
+
+#### API ENDPOINTS ONLINE
+`User: ` <http://api.spibes.com/api/user> You can `GET` , `POST` and `PUT` 
+
+`Category: ` <http://api.spibes.com/api/cat> You can `GET` , `POST` and `PUT` 
+
+`FavoriteList: ` <http://api.spibes.com/api/list> You can `GET` , `POST` and `PUT` 
+
+#### POSSIBLE QUERIES FOR THE ONLINE VERSION OF THE API
+* Create a new user using POST to User endpoint
+* Login a user using get parameter passing username=username and password=password as GET arguments
+* Change the username of a user using PUT to User endpoint
+* Query all users by using GET without passing any argument
+* Query the categories owned by a user by passing user=user_id as a GET argument
+* Query all categories by using GET to Category endpoint without passing any argument
+* Create a new category by using POST to the endpoint
+* Query all favorite list by using GET to the FavoriteList endpoint without passing any argument
+* Query all favorite list by passing a cat=cat_id GET argument to the list endpoint
+* Query all favorite list owned by a particular user by passing a user=user_id GET argument to the endpoint
+* Query all favorite list owned by a user and under a specified category using user=user_id and cat=cat_id GET arguments to the endpoint
+* Query a particular list by using id=list_id GET argument to the endpoint
+* Create a new favorite list with POST to the endpoint
+* Update a favorite list with PUT to the endpoint specifying the id of the list
+
 
 ## Built With
 

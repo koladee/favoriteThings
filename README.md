@@ -28,7 +28,7 @@ When a new favorite things is to be added by a particular user, the following co
 
 
 ##Features of the solution
-*  A REST API built with flask-restful with three endpoints (listed in the API endpoint section) which can handle GET, POST and PUT requests.
+*  A REST API built with flask-restful with three major endpoints (listed in the API endpoint section) which can handle GET, POST and PUT requests.
 * User login implemented with flask-login
 * SQLAlchemy ORM used for querying the database
 * Password encryption using Bcrypt
@@ -51,7 +51,7 @@ $ pip install -r requirements.txt
 
 Initialize Virtual Environment
 ```
-$ venv/bin/activate
+$ source venv/bin/activate
 ```
 * Step 3
 
@@ -88,11 +88,28 @@ You can now start interacting with the web app
 <https://spibes.com/>
 
 #### API ENDPOINTS ONLINE
-`User: ` <https://spibes.com/api/user> You can `GET` , `POST` and `PUT` 
+`User: ` <http://api.spibes.com/api/user> You can `GET` , `POST` and `PUT` 
 
-`Category: ` <https://spibes.com/api/cat> You can `GET` , `POST` and `PUT` 
+`Category: ` <http://api.spibes.com/api/cat> You can `GET` , `POST` and `PUT` 
 
-`FavoriteList: ` <https://spibes.com/api/list> You can `GET` , `POST` and `PUT` 
+`FavoriteList: ` <http://api.spibes.com/api/list> You can `GET` , `POST` and `PUT` 
+
+#### POSSIBLE QUERIES FOR THE ONLINE VERSION OF THE API
+* Create a new user using POST to User endpoint
+* Login a user using get parameter passing username=username and password=password as GET arguments
+* Change the username of a user using PUT to User endpoint
+* Query all users by using GET without passing any argument
+* Query the categories owned by a user by passing user=user_id as a GET argument
+* Query all categories by using GET to Category endpoint without passing any argument
+* Create a new category by using POST to the endpoint
+* Query all favorite list by using GET to the FavoriteList endpoint without passing any argument
+* Query all favorite list by passing a cat=cat_id GET argument to the list endpoint
+* Query all favorite list owned by a particular user by passing a user=user_id GET argument to the endpoint
+* Query all favorite list owned by a user and under a specified category using user=user_id and cat=cat_id GET arguments to the endpoint
+* Query a particular list by using id=list_id GET argument to the endpoint
+* Create a new favorite list with POST to the endpoint
+* Update a favorite list with PUT to the endpoint specifying the id of the list
+
 
 ## Built With
 

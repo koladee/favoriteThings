@@ -21,9 +21,6 @@
     <div class="form-group">
         <select onchange="sort()" id="sort" class="form-control">
             <option value="">All Categories</option>
-            <option value="1">Person</option>
-            <option value="2">Food</option>
-            <option value="3">Place</option>
             {% for k in cats %}
                 <option value="{{ k.id }}">{{ k.name }}</option>
             {% endfor %}
@@ -62,18 +59,6 @@
            <div class="form-group">
                 <label>CATEGORY</label>
                <select id="{{ l['rid']}}{{l['id']}}{{"category"}}" class="form-control" disabled >
-                   <option {% if l['cat'] == 1 %}
-                           selected
-                           {% endif %}
-                           value="1">Person</option>
-               <option {% if l['cat'] == 2 %}
-                           selected
-                           {% endif %}
-                           value="2">Food</option>
-               <option {% if l['cat'] == 3 %}
-                           selected
-                           {% endif %}
-                           value="3">Place</option>
                    {% for k in cats %}
                        <option{% if l['cat'] == k.id %}
                            selected

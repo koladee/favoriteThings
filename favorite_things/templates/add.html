@@ -28,9 +28,7 @@
     <select class="form-control" id="category">
         <option value="">---SELECT---</option>
 {% for k in cats %}
-    {% if k.user_id == '' or k.user_id == 1 %}
-            <option value="{{ k.id }}">{{ k.name }}</option>
-    {% endif %}
+    <option value="{{ k.id }}">{{ k.name }}</option>
 {% endfor %}
 
     </select>

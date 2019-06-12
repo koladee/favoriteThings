@@ -90,16 +90,17 @@ def process(ob):
         return resp, 400
 
 
-
 class Users(Resource):
     def get(self):
-        if request.data is None:
+        if not request.args.get('email'):
             # return the list of users
             users = User.query.all()
             users = users_schema.dump(users).data
             return {'status': 'success', 'data': users}, 200
         else:
-            json_data = request.get_json(force=True)
+            json_data = {}
+            json_data['email'] = request.args.get('email')
+            json_data['password'] = request.args.get('password')
             users = User.query.filter_by(email=json_data['email']).first()
             if users:
                 if users and bcrypt.check_password_hash(users.password, json_data['password']):
@@ -111,7 +112,6 @@ class Users(Resource):
                     return {'status': 'error', 'message': "Email address or password is incorrect."}, 200
             else:
                 return {'status': 'error', 'message': "The user with this email address does not exist."}, 200
-
 
     def post(self):
         # insert into db
@@ -152,10 +152,23 @@ class Users(Resource):
 
 class Cats(Resource):
     def get(self):
-        # return the list of categories
-        cats = Category.query.all()
-        cats = categories_schema.dump(cats).data
-        return {'status': 'success', 'data': cats}, 200
+        if not request.args.get('user'):
+            # return the list of categories
+            cats = Category.query.all()
+            cats = categories_schema.dump(cats).data
+            return {'status': 'success', 'data': cats}, 200
+        else:
+            user = int(request.args.get('user'))
+            cat1 = Category.query.filter_by(id=1).first()
+            cat2 = Category.query.filter_by(id=2).first()
+            cat3 = Category.query.filter_by(id=3).first()
+            cats = Category.query.filter_by(user_id=user).all()
+            cats.append(cat1)
+            cats.append(cat2)
+            cats.append(cat3)
+            cats = categories_schema.dump(cats).data
+            return {'status': 'success', 'data': cats}, 200
+
 
     def post(self):
         # insert into db
@@ -196,20 +209,33 @@ class Cats(Resource):
 class FavoriteList(Resource):
     def get(self):
         # return Lists
-        if request.data is None:
+        if not request.args.get('user') and not request.args.get('id') and not request.args.get('cat'):
             lists = List.query.all()
+            lists = lists_schema.dump(lists).data
+            return {'status': 'success', 'data': lists}, 200
         else:
-            json_data = request.get_json(force=True)
-            if json_data['user'] != "":
-                if json_data['cat'] == "":
-                    lists = List.query.filter_by(user_id=json_data['user']).all()
+            if request.args.get('user'):
+                user = int(request.args.get('user'))
+                if not request.args.get('cat'):
+                    lists = List.query.filter_by(user_id=user).all()
                 else:
-                    lists = List.query.filter_by(user_id=json_data['user'], cat=json_data['cat']).all()
+                    cat = int(request.args.get('cat'))
+                    lists = List.query.filter_by(user_id=user, cat=cat).all()
+                lists = lists_schema.dump(lists).data
+                return {'status': 'success', 'data': lists}, 200
             else:
-                lists = List.query.filter_by(id=json_data['id']).all()
+                if request.args.get('cat') and not request.args.get('id'):
+                    cat = int(request.args.get('cat'))
+                    lists = List.query.filter_by(cat=cat).all()
+                    lists = lists_schema.dump(lists).data
+                else:
+                    idd = int(request.args.get('id'))
+                    lists = List.query.filter_by(id=idd).first()
+                    lists = list_schema.dump(lists).data
+                return {'status': 'success', 'data': lists}, 200
 
-        lists = lists_schema.dump(lists).data
-        return {'status': 'success', 'data': lists}, 200
+
+
 
     def post(self):
         # insert into db

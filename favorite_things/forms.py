@@ -15,8 +15,3 @@ class RegForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm = PasswordField('Verify Password', validators=[DataRequired(), EqualTo('password',
                                                                                    message='Passwords do not match.')])
-
-    def check_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationError('This email address already exist for a user on this platform.')

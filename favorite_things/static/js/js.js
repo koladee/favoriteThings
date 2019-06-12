@@ -63,11 +63,11 @@ function nav(a) {
     $("#"+a+"-bt").addClass('active');
     $("#content").html('<center style="margin-top: 20%;"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></center>');
     if(a === "list") {
-        $.post('/list', {user: active, cat: ""}, function (data) {
+        $.post('/list', {user: active}, function (data) {
             $("#content").html(data);
         });
     }else if(a === "home"){
-        $.get('/home', {}, function (data) {
+        $.post('/home', {user: active}, function (data) {
             $("#content").html(data);
         });
     }
@@ -186,7 +186,7 @@ function save_list(a, b) {
 
 function log_list(a, b) {
     $("#modal").modal("show");
-    $.post('/log', {id:b, user:"", cat:""}, function (data) {
+    $.post('/log', {id:b}, function (data) {
        $("#put-stuffs").html(data);
     });
 }
@@ -197,7 +197,7 @@ function new_cat(){
         '</div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>');
     var cat = $("#new-cat");
     if(cat.val() !== ""){
-        $.post('/cat/new', {user_id: '1', name: cat.val()}, function(data) {
+        $.post('/cat/new', {user_id: active, name: cat.val()}, function(data) {
             bt.html('<i class="glyphicon glyphicon-plus"></i> Add');
             if (data === "success") {
             cat.val('');
@@ -207,19 +207,21 @@ function new_cat(){
            msg: "New category successfully added."
        });
         }else{
-           Lobibox.notify('error', {
-           showClass: 'fadeIn',
-           hideClass: 'fadeOut',
-           msg: "Oops! An error occur while attempting to add new category"
-       });
+                bt.html('<i class="glyphicon glyphicon-plus"></i> Add');
+               Lobibox.notify('error', {
+                   showClass: 'fadeIn',
+                   hideClass: 'fadeOut',
+                   msg: "Oops! An error occur while attempting to add new category"
+                });
         }
         });
     }else{
-       Lobibox.notify('error', {
+        bt.html('<i class="glyphicon glyphicon-plus"></i> Add');
+        Lobibox.notify('error', {
            showClass: 'fadeIn',
            hideClass: 'fadeOut',
            msg: "Oops! You can't submit an empty field!"
-       });
+        });
     }
 }
 
@@ -234,14 +236,14 @@ function sort() {
             contain.html(data);
         });
     }else{
-        $.post('/sort', {user: '1', cat:cat}, function (data) {
+        $.post('/sort', {user: active, cat:cat}, function (data) {
             contain.html(data);
         });
     }
 }
 
 function login_form(){
-    if(active !== "" && active_name !== "") {
+    if(active === "" && active_name === "") {
         $("#content").html('<center style="margin-top: 20%;"><div class="lds-roller"><div></div><div></div><div>' +
             '</div><div></div><div></div><div></div><div></div><div></div></div></center>');
         $.get('/signin', {}, function (data) {
@@ -272,7 +274,8 @@ function submit_reg(){
             if(pass.val() === conf.val()){
                 $.post('/register', {username:username.val(), email:email.val(), password:pass.val()}, function(data){
                   $("#reg-bt").html('SUBMIT');
-                  if(data['status'] === "success"){
+                  data = data.split("//");
+                  if(data[0] === "success"){
                       username.val('');
                       email.val('');
                       pass.val('');
@@ -283,7 +286,7 @@ function submit_reg(){
                           msg: "Successfully signed up."
                       });
                       login_form();
-                  }else if(data['status'] === "error"){
+                  }else if(data[0] === "error"){
                       Lobibox.notify('error', {
                           showClass: 'fadeIn',
                           hideClass: 'fadeOut',
@@ -328,20 +331,22 @@ function login(){
         if(pass.val() !== ""){
             $.post('/login', {email:user.val(), password:pass.val()}, function(data){
               $("#login-bt").html('LOGIN');
-              if(data['status'] === "success"){
+              var cred = data.split("//");
+              if(cred[0] === "success"){
                   user.val('');
                   pass.val('');
-                  active = data['data']['id'];
-                  active_name = data['data']['username'];
+                  active = cred[1];
+                  active_name = cred[2];
                   nav('home');
                   $("#list-bt").removeClass('hidden');
                   $("#active").removeClass('hidden');
+                  $("#logout").removeClass('hidden');
                   $("#active-name").html(active_name);
               }else if(data['status'] === "error"){
                   Lobibox.notify('error', {
                       showClass: 'fadeIn',
                       hideClass: 'fadeOut',
-                      msg: data['message']
+                      msg: "Username or password is incorrect."
                   });
               }
 
@@ -363,4 +368,8 @@ function login(){
             msg: "Oops! A email field is required."
         });
     }
+}
+
+function logout(){
+    window.document.location.assign(String(document.location).split("#")[0]);
 }

@@ -1,18 +1,9 @@
 from flask import render_template, request, jsonify
 from requests import put, get, post
-from favorite_things import app, api
-from favorite_things import models
-from favorite_things.api_classes import Users, Cats, FavoriteList
+from favorite_things import app
 from favorite_things.forms import LoginForm, RegForm
 
 
-# API ROUTES
-api.add_resource(Users, '/user')
-api.add_resource(Cats, '/cat')
-api.add_resource(FavoriteList, '/list')
-
-
-# END OF API ROUTES
 @app.route('/')
 def index():
     form = LoginForm()
@@ -20,10 +11,12 @@ def index():
     return render_template('index.html', comp=comp)
 
 
-@app.route('/home')
+@app.route('/home', methods=['POST'])
 def home():
-    cats = models.Category.query.all()
-    cont = render_template('add.html', cats=cats)
+    forms = request.form
+    cate = get('http://api.spibes.com/api/cat?user='+str(forms['user']))
+    cates = cate.json()
+    cont = render_template('add.html', cats=cates['data'])
     return cont
 
 
@@ -45,9 +38,13 @@ def signin():
 def reg():
     if request.method == 'POST':
         forms = jsonify(request.form)
-        resp = post('http://127.0.0.1:5000/api/user', data=forms.data, json=True)
-        status = jsonify(resp.json())
-        return status.data
+        resp = post('http://api.spibes.com/api/user', data=forms.data, json=True)
+        status = resp.json()
+        if status['status'] == "error":
+            ret = str(status['status'])+"//"+str(status['message'])
+        else:
+            ret = str(status['status'])
+        return ret
     else:
         status = "Access denied!"
         return status
@@ -56,10 +53,13 @@ def reg():
 @app.route('/login', methods=['POST'])
 def login():
     if request.method == 'POST':
-        forms = jsonify(request.form)
-        resp = get('http://127.0.0.1:5000/api/user', data=forms.data, json=True)
-        status = jsonify(resp.json())
-        return status
+        forms = request.form
+        email = forms['email']
+        password = forms['password']
+        resp = get('http://api.spibes.com/api/user?email='+email+'&password='+password)
+        status = resp.json()
+        dat = str(status['status']+"//"+str(status['data']['id'])+"//"+status['data']['username'])
+        return dat
     else:
         status = "Access denied!"
         return status
@@ -68,23 +68,24 @@ def login():
 @app.route('/list', methods=['POST'])
 def fetch():
     if request.method == 'POST':
-        forms = jsonify(request.form)
-        cats = models.Category.query.filter_by(user_id=request.form['user']).all()
-        resp = get('http://127.0.0.1:5000/api/list', data=forms.data, json=True)
+        forms = request.form
+        cate = get('http://api.spibes.com/api/cat?user='+str(forms['user']))
+        cates = cate.json()
+        resp = get('http://api.spibes.com/api/list?user='+str(forms['user']))
         fav_list = resp.json()
-        comp = render_template('list.html', list=fav_list['data'], cats=cats)
+        comp = render_template('list.html', list=fav_list['data'], cats=cates['data'])
         return comp
 
 
 @app.route('/log', methods=['POST'])
 def fetch_log():
     if request.method == 'POST':
-        forms = jsonify(request.form)
-        resp = get('http://127.0.0.1:5000/api/list', data=forms.data, json=True)
+        forms = request.form
+        resp = get('http://api.spibes.com/api/list?id='+str(forms['id']))
         log_list = resp.json()
         dt = []
         data = log_list['data']
-        log = data[0]['log']
+        log = data['log']
         if log is not None and log != "":
             lgz = log.split('{:||:}')
             for lgs in lgz:
@@ -104,8 +105,9 @@ def fetch_log():
 def edit():
     if request.method == 'POST':
         forms = jsonify(request.form)
-        resp = put('http://127.0.0.1:5000/api/list', data=forms.data, json=True)
+        resp = put('http://api.spibes.com/api/list', data=forms.data, json=True)
         res = str(resp)
+        print(res)
         return res
 
 
@@ -113,7 +115,7 @@ def edit():
 def new_favorite():
     if request.method == 'POST':
         forms = jsonify(request.form)
-        resp = post('http://127.0.0.1:5000/api/list', data=forms.data, json=True)
+        resp = post('http://api.spibes.com/api/list', data=forms.data, json=True)
         return jsonify(resp.json())
     else:
         resp = {
@@ -127,7 +129,7 @@ def new_favorite():
 def new_cat():
     if request.method == 'POST':
         forms = jsonify(request.form)
-        resp = post('http://127.0.0.1:5000/api/cat', data=forms.data, json=True)
+        resp = post('http://api.spibes.com/api/cat', data=forms.data, json=True)
         return resp.json()['status']
     else:
         resp = {
@@ -140,10 +142,14 @@ def new_cat():
 @app.route('/sort', methods=['POST'])
 def sort():
     if request.method == 'POST':
-        forms = jsonify(request.form)
-        cats = models.Category.query.filter_by(user_id=request.form['user']).all()
-        resp = get('http://127.0.0.1:5000/api/list', data=forms.data, json=True)
+        forms = request.form
+        cate = get('http://api.spibes.com/api/cat?user=' + str(forms['user']))
+        cates = cate.json()
+        if forms['cat'] == "":
+            resp = get('http://api.spibes.com/api/list?user=' + str(forms['user']))
+        else:
+            resp = get('http://api.spibes.com/api/list?user=' + str(forms['user']) + '&cat=' + str(forms['cat']))
         fav_list = resp.json()
-        comp = render_template('sort.html', list=fav_list['data'], cats=cats)
+        comp = render_template('sort.html', list=fav_list['data'], cats=cates['data'])
         return comp
 

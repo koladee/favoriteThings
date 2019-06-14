@@ -143,6 +143,10 @@ function save_list(a, b) {
                            }
 
                        }else{
+                           title.attr('readonly', 'readonly');
+                           des.attr('readonly', 'readonly');
+                           cat.attr('disabled', 'disabled');
+                           rank.attr('readonly', 'readonly');
                            edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
                            edit_bt.attr('onclick', 'edit_list(\''+a+'\', \''+b+'\')');
                            Lobibox.notify('error', {
@@ -153,7 +157,7 @@ function save_list(a, b) {
                        }
                     });
                 }else{
-                    edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
+                    edit_bt.html('<i class="glyphicon glyphicon-ok"></i> SAVE');
                     Lobibox.notify('error', {
                         showClass: 'fadeIn',
                         hideClass: 'fadeOut',
@@ -161,7 +165,7 @@ function save_list(a, b) {
                     });
                 }
             }else{
-                edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
+                edit_bt.html('<i class="glyphicon glyphicon-ok"></i> SAVE');
                 Lobibox.notify('error', {
                     showClass: 'fadeIn',
                     hideClass: 'fadeOut',
@@ -170,7 +174,7 @@ function save_list(a, b) {
             }
 
         }else{
-            edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
+            edit_bt.html('<i class="glyphicon glyphicon-ok"></i> SAVE');
             Lobibox.notify('error', {
                 showClass: 'fadeIn',
                 hideClass: 'fadeOut',
@@ -178,7 +182,7 @@ function save_list(a, b) {
             });
         }
     }else{
-        edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
+        edit_bt.html('<i class="glyphicon glyphicon-ok"></i> SAVE');
         Lobibox.notify('error', {
             showClass: 'fadeIn',
             hideClass: 'fadeOut',

@@ -153,6 +153,7 @@ function save_list(a, b) {
                        }
                     });
                 }else{
+                    edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
                     Lobibox.notify('error', {
                         showClass: 'fadeIn',
                         hideClass: 'fadeOut',
@@ -160,6 +161,7 @@ function save_list(a, b) {
                     });
                 }
             }else{
+                edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
                 Lobibox.notify('error', {
                     showClass: 'fadeIn',
                     hideClass: 'fadeOut',
@@ -168,13 +170,15 @@ function save_list(a, b) {
             }
 
         }else{
-          Lobibox.notify('error', {
-            showClass: 'fadeIn',
-            hideClass: 'fadeOut',
-            msg: "Oops! The description field must be greater or equal to 10 characters if not empty."
-        });
+            edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
+            Lobibox.notify('error', {
+                showClass: 'fadeIn',
+                hideClass: 'fadeOut',
+                msg: "Oops! The description field must be greater or equal to 10 characters if not empty."
+            });
         }
     }else{
+        edit_bt.html('<i class="glyphicon glyphicon-pencil"></i> EDIT');
         Lobibox.notify('error', {
             showClass: 'fadeIn',
             hideClass: 'fadeOut',
@@ -290,7 +294,7 @@ function submit_reg(){
                       Lobibox.notify('error', {
                           showClass: 'fadeIn',
                           hideClass: 'fadeOut',
-                          msg: data['message']
+                          msg: data[1]
                       });
                   }
 

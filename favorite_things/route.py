@@ -58,7 +58,11 @@ def login():
         password = forms['password']
         resp = get('http://api.spibes.com/api/user?email='+email+'&password='+password)
         status = resp.json()
-        dat = str(status['status']+"//"+str(status['data']['id'])+"//"+status['data']['username'])
+        print(status)
+        if status['status'] != "error":
+            dat = str(status['status']+"//"+str(status['data']['id'])+"//"+status['data']['username'])
+        else:
+            dat = str(status['status']+"//"+status['message'])
         return dat
     else:
         status = "Access denied!"

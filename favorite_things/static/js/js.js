@@ -342,11 +342,11 @@ function login(){
                   $("#active").removeClass('hidden');
                   $("#logout").removeClass('hidden');
                   $("#active-name").html(active_name);
-              }else if(data['status'] === "error"){
+              }else if(cred[0] === "error"){
                   Lobibox.notify('error', {
                       showClass: 'fadeIn',
                       hideClass: 'fadeOut',
-                      msg: "Username or password is incorrect."
+                      msg: cred[1]
                   });
               }
 

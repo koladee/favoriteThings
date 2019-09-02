@@ -14,7 +14,7 @@
 
 `ANSWER 3`
 
-**I would like to say, I only research onn any feature of a programming language that is able to solve the present problem before me, in a nutshell, I am more of a problem solving or algorithm driven developer than a syntax driven developer. I careless about new features added to a programming language if i won't be using it at the moment.**
+**I would like to say, I prefer to research on a feature of a programming language that is able to solve the present problem before me and if I am coming across it for the first time, I consider it to be new in this regards, in a nutshell, I am more of a problem solving or algorithm driven developer than a syntax driven developer. I careless about new features added to a programming language if I won't be using it at the moment, although I am subscribed to get updates on new libraries added to the programing languages that I write.**
 ****
 
 `QUESTION 4`
